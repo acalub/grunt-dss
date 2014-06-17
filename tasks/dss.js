@@ -105,10 +105,11 @@ module.exports = function(grunt){
             });
 
             // Create HTML ouput
-            var html = handlebars.compile(grunt.file.read(template_filepath))({
+/*            var html = handlebars.compile(grunt.file.read(template_filepath))({
               project: grunt.file.readJSON('package.json'),
               files: styleguide
-            });
+            });*/
+		var json = '{"styleguide":' + styleguide + '}';
 
             var output_type = 'created', output = null;
             if (grunt.file.exists(output_filepath)) {
@@ -119,6 +120,7 @@ module.exports = function(grunt){
             if (output !== html) {
               // Render file
               grunt.file.write(output_filepath, html);
+	      grunt.file.write('dssComments.json',json);
 
               // Report build
               grunt.log.writeln('✓ Styleguide ' + output_type + ' at: ' + grunt.log.wordlist([output_dir], {color: 'cyan'}));
